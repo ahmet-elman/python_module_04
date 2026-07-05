@@ -22,7 +22,7 @@ def ft_data_archivist() -> None:
         print("\n---")
 
     except Exception as e:
-        print(f"Error opening file '{file_line}':", e)
+        sys.stderr.write(f"[STDERR] Error opening file '{file_line}': {e} \n")
         error_status = 1
 
     finally:
@@ -41,7 +41,9 @@ def ft_data_archivist() -> None:
         new_lines: list[str] = [ln + '#' for ln in content.splitlines()]
         print(*new_lines, sep="\n")
         print("\n---")
-        file_name = input("Enter new file name (or empty):")
+        print("Enter new file name (or empty):", end=" ")
+        sys.stdout.flush()
+        file_name = sys.stdin.readline().strip()
         if not file_name.strip():
             print("Not saving data.")
             return
@@ -52,7 +54,8 @@ def ft_data_archivist() -> None:
             new_file.write(line + "\n")
         print(f"Data saved in file '{file_name}'.")
     except Exception as e:
-        print(f"Error opening file '{file_name}':", e)
+        sys.stderr.write(f"[STDERR] Error opening file '{file_name}': {e} \n")
+        print("Data not saved.")
     except BaseException:
         return
 
